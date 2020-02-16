@@ -1344,13 +1344,19 @@ public class PgConnection implements BaseConnection {
   @Override
   public Clob createClob() throws SQLException {
     checkClosed();
-    throw org.postgresql.Driver.notImplemented(this.getClass(), "createClob()");
+
+    LargeObjectManager loApi = getLargeObjectAPI();
+    long loId = loApi.createLO();
+    return makeClob(loId);
   }
 
   @Override
   public Blob createBlob() throws SQLException {
     checkClosed();
-    throw org.postgresql.Driver.notImplemented(this.getClass(), "createBlob()");
+
+    LargeObjectManager loApi = getLargeObjectAPI();
+    long loId = loApi.createLO();
+    return makeBlob(loId);
   }
 
   @Override
